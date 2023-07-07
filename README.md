@@ -1,12 +1,9 @@
-# DevOps
-# A command-line script to perform the tasks.
-
 #!/bin/bash
+
 # Function to check if a command is available
 command_exists() {
   command -v "$1" >/dev/null 2>&1
 }
-(This line specifies the shebang (#!/bin/bash) to indicate that the script should be executed using the Bash shell. The script defines a function named command_exists that checks if a given command is available.)
 
 # Check if Docker is installed
 #if ! command_exists docker; then
@@ -14,7 +11,6 @@ command_exists() {
   # Install Docker
   # Add your installation steps here
 #fi
-(These lines are commented out, but they check if Docker is installed. If Docker is not found, it displays a message and you can add installation steps specific to your system.)
 
 # Check if Docker Compose is installed
 #if ! command_exists docker-compose; then
@@ -22,7 +18,6 @@ command_exists() {
   # Install Docker Compose
   # Add your installation steps here
 #fi
-(These lines are also commented out, but they check if Docker Compose is installed. If Docker Compose is not found, it displays a message and you can add installation steps specific to your system.)
 
 # Function to create a WordPress site
 create_wordpress_site() {
@@ -34,7 +29,6 @@ create_wordpress_site() {
     echo "Please provide a site name as a command-line argument."
     exit 1
   fi
-(This function named create_wordpress_site is defined to create a WordPress site. It accepts a command-line argument as the site name and checks if the site name is provided.)
 
   # Create a docker-compose.yml file for the LEMP stack
   cat <<EOF >docker-compose.yml
@@ -56,7 +50,6 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: secret
 EOF
-(This block of code uses a heredoc (<<EOF) to create a docker-compose.yml file for a LEMP stack (Linux, Nginx, MySQL, PHP). It defines three services (Nginx, PHP-FPM, and MySQL) and specifies their respective images, ports, and volumes.)
 
   # Create Nginx configuration file
   mkdir -p nginx/conf.d
@@ -78,12 +71,10 @@ server {
     }
 }
 EOF
-(This code block creates an Nginx configuration file in the nginx/conf.d directory. It configures Nginx to listen on port 80, sets the server name to the provided site name, and defines the PHP-FPM location for processing PHP files.)
 
   # Create index.php file
   mkdir -p php
   echo "<?php phpinfo();" > php/index.php
-(These lines create an index.php file in the php directory with a simple PHP script that outputs PHP information.)
 
   # Start the containers
   docker-compose up -d
@@ -99,7 +90,6 @@ EOF
   read -p "Press Enter to open the site in a browser"
   xdg-open "http://example.com" >/dev/null 2>&1
 }
-(These lines start the containers defined in the docker-compose.yml file using the docker-compose up -d command. It adds an entry to the /etc/hosts file for example.com to resolve to 127.0.0.1. It then opens http://example.com in a web browser using xdg-open.)
 
 # Function to enable/disable the site
 toggle_site() {
@@ -111,7 +101,6 @@ toggle_site() {
     echo "Please provide a site name as a command-line argument."
     exit 1
   fi
-(This function named toggle_site is defined to enable or disable the site. It accepts a command-line argument as the site name and checks if the site name is provided.)
 
   # Check if the site is currently enabled or disabled
   if docker-compose ps | grep -q "$site_name"; then
@@ -121,9 +110,8 @@ toggle_site() {
   else
     # Site is disabled, start the containers
     docker-compose start
-    echo "Site enabled"
+    echo "Site enabled
     }
-(This code block checks if the site containers defined in the docker-compose.yml file are currently running or not. If the containers are running, it stops them using docker-compose stop and displays a message indicating that the site is disabled. If the containers are not running, it starts them using docker-compose start and displays a message indicating that the site is enabled.)
 
 # Call the toggle_site function with the provided command-line argument
 toggle_site "$1"
