@@ -6,18 +6,16 @@ command_exists() {
 }
 
 # Check if Docker is installed
-#if ! command_exists docker; then
-#  echo "Docker is not installed. Installing Docker..."
+if ! command_exists docker; then
+  echo "Docker is not installed. Installing Docker..."
   # Install Docker
-  # Add your installation steps here
-#fi
+fi
 
 # Check if Docker Compose is installed
-#if ! command_exists docker-compose; then
-#  echo "Docker Compose is not installed. Installing Docker Compose..."
+if ! command_exists docker-compose; then
+  echo "Docker Compose is not installed. Installing Docker Compose..."
   # Install Docker Compose
-  # Add your installation steps here
-#fi
+fi
 
 # Function to create a WordPress site
 create_wordpress_site() {
